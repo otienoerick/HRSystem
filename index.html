@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Staff & Leave Management</title><link rel="stylesheet" href="/style.css"></head><body><header><div class="brand"><span class="mark">U</span><div><b>Institution Portal</b><small>Staff & Leave Management</small></div></div><div id="account"></div></header><main><section id="login" class="panel"><h1>Sign in</h1><p>Use your institutional account.</p><form id="loginForm"><label>Username<input name="username" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><button>Sign in</button></form></section><section id="app" hidden><nav>
+  <button data-page="overview">Overview</button>
+  <button data-page="employees">Staff directory</button>
+  <button data-page="leave">Leave requests</button>
+  <button data-page="apply">Apply for leave</button>
+  <button data-page="users" id="usersNav" hidden>Manage Users</button>
+</nav><div id="content"></div></section><div id="notice" role="status"></div></main><script type="module" src="/app.js"></script></body></html>

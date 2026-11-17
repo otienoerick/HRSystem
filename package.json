@@ -1,0 +1,14 @@
+{
+  "name": "university-staff-leave-management",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted staff and leave management system; Node 24 + SQLite, no runtime dependencies.",
+  "scripts": {
+    "start": "node server.mjs",
+    "init-db": "node scripts/init-db.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

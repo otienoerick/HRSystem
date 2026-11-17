@@ -1,0 +1,7 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { DatabaseSync } from 'node:sqlite';
+import { readFileSync } from 'node:fs';
+const schema=readFileSync(new URL('./database/schema.sql',import.meta.url),'utf8');
+test('schema initializes with all ERD entities and seed-compatible roles',()=>{const db=new DatabaseSync(':memory:');db.exec(schema);const names=db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(x=>x.name);for(const n of ['departments','designations','employees','roles','users','user_roles','employment_records','employee_documents','leave_types','leave_requests','leave_approvals','leave_transactions','leave_balances','audit_logs'])assert.ok(names.includes(n),n);db.close()});
+test('employee number uniqueness and foreign keys are enforced',()=>{const db=new DatabaseSync(':memory:');db.exec(schema);db.prepare('INSERT INTO departments(department_code,department_name) VALUES(?,?)').run('SCI','Science');db.prepare('INSERT INTO employees(employee_number,first_name,last_name) VALUES(?,?,?)').run('E001','A','One');assert.throws(()=>db.prepare('INSERT INTO employees(employee_number,first_name,last_name) VALUES(?,?,?)').run('E001','B','Two'));assert.throws(()=>db.prepare('INSERT INTO leave_requests(request_reference,employee_id,leave_type_id,start_date,end_date,requested_working_days,reason) VALUES(?,?,?,?,?,?,?)').run('LR1',999,999,'2026-10-13','2026-10-14',2,'test'));db.close()});
